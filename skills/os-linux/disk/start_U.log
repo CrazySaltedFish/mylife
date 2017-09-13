@@ -1,0 +1,3 @@
+#dd command
+sudo dd bs=4M if={iso file path} of={u stroged disk}
+sudo dd bs =4M if=~/Documents/ubuntu-16.04.2.iso of =/dev/sdb

@@ -1,0 +1,14 @@
+curl -O website.com/file
+wget website.com/file
+ping -c 4 google.com
+tracepath example.com
+mtr -c 4 google.com
+whois
+host
+ifplugstatus
+ifdown & ifup
+
+nmcli
+dhclient -r
+dhclient 
+netstat -p/-s
