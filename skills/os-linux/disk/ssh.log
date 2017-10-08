@@ -1,0 +1,8 @@
+#安装客户端与服务器端
+sudo apt-get install penssh-client openssh-server
+#ssh服务启动
+sudo /etc/init.d/ssh start
+#ssh停止服务
+sudo /etc/init.d/ssh stop
+#ssh重启服务
+sudo /etc/init.d/ssh restart

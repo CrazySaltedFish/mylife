@@ -9,3 +9,20 @@ fdisk /dev/sdb
 #之后可根据提示操作
 #d删除分区、n添加分区
 
+#挂载硬盘到/home
+#1.格式化硬盘
+mkfs -t ext4 /dev/sdb1
+#2.将硬盘临时挂载，并把home下的文件拷到挂载的目录下
+mkdir /disk
+mount /dev/sdb1 /disk
+cp -a /home/* /disk
+rm -rf /home/*
+umount /dev/sdb1
+#3.设置开机挂载
+vim /etc/fstab
+#尾行增加
+/dev/sdb1 /home ext4 defaults 1 2
+#4.挂载/etc/fstab 中未挂载的分区
+mount -a
+#5.查看结果
+df -h
