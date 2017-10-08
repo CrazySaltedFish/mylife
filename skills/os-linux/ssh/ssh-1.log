@@ -1,0 +1,16 @@
+#generate id_rsa
+ssh-keygen -t rsa -C "email"
+#~/.ssh/id_rsa id_rsa.pub
+scp id_rsa.pub root@{Ip}:~/.ssh/authorized_keys
+
+
+#if you already have the id_rsa,you should add new id_rsa.new to ssh-add and addsome information to ~/.ssh/config(if there don't have,you should use mkdir command to build it.).
+chmod 600 id_rsa.new
+ssh-add ~/.ssh/id_rsa.new
+
+#add to config
+Host fazheng
+	HostName ip
+	User user
+	IdentityFile ~/.ssh/id_rsa.new
+
