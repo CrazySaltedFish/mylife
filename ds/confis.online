@@ -1,0 +1,365 @@
+management:
+  security:
+    roles: ADMIN
+    enabled: false
+#  context-path: /admin
+
+security:
+  user:
+    name: dida
+    password: pinche
+
+server:
+  tomcat:
+    accesslog:
+      directory: /applogs/tomcat/access/${spring.application.name}
+      enabled: true
+    basedir: /appdata/${spring.application.name}
+    accept-count: 1024
+    max-connections: 10240
+    max-threads: 1
+    min-spare-threads: 1
+
+spring:
+  application:
+    index: ${spring.cloud.client.hostname}
+  http:
+    encoding:
+      force: true     
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration
+  aop:
+    auto: true
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: guantong, guansuo, zhaoguang
+          zkNodes: guantong, guansuo, zhaoguang
+          defaultZkPort: 2201
+          defaultBrokerPort: 9092
+
+datasource:
+  common:
+    master:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 100
+      maxWait: 500  # 配置获取连接等待超时的时间
+      defaultAutoCommit: false
+      removeAbandoned: false #移除无引用连接（那些没有close的连接）此处设置为false，需要保证程序中连接一定释放
+      minEvictableIdleTimeMillis: 1800000 # 配置一个连接空闲多久从池中移除，单位是毫秒,(-1代表不做判断)
+      timeBetweenEvictionRunsMillis: 1800000 # 配置定时器，间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒,值为负数表示不开启
+      testOnBorrow: true
+      testOnReturn: false
+      testWhileIdle: true #当连接空闲时是否测试，即保持连接一直存活，配合定时器使用
+      filters: stat,slf4j,wall # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500;connectTimeout=2000;socketTimeout=3000 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-init-sqls: ["SET NAMES utf8mb4"]
+      driver-class-name: com.mysql.jdbc.Driver
+    slave:
+      initialSize: 8
+      minIdle: 8
+      maxActive: 100
+      maxWait: 1000  # 配置获取连接等待超时的时间
+      defaultAutoCommit: false
+      removeAbandoned: false #移除无引用连接（那些没有close的连接）此处设置为false，需要保证程序中连接一定释放
+      minEvictableIdleTimeMillis: 1800000 # 配置一个连接空闲多久从池中移除，单位是毫秒,(-1代表不做判断)
+      timeBetweenEvictionRunsMillis: 1800000 # 配置定时器，间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒,值为负数表示不开启
+      testOnBorrow: true
+      testOnReturn: false
+      testWhileIdle: true #当连接空闲时是否测试，即保持连接一直存活，配合定时器使用
+      filters: stat,slf4j,wall # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500;connectTimeout=2000;socketTimeout=3000 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-init-sqls: ["SET NAMES utf8mb4"]
+      driver-class-name: com.mysql.jdbc.Driver
+
+  didapinche:
+    master:
+      url: jdbc:mysql://192.168.2.88:3308/didapinche?characterEncoding=utf8
+      username: onlineread
+      password: Dida9in!che
+    slave:
+      url: jdbc:mysql://192.168.2.252:3308/didapinche?characterEncoding=utf8
+      username: onlineread
+      password: Dida9in!che
+  misc:
+    master:
+      url: jdbc:mysql://192.168.2.92:3308/didapinche_misc?characterEncoding=utf8
+      username: miscread
+      password: Di_da9in@che
+    slave:
+      url: jdbc:mysql://192.168.2.244:3308/didapinche_misc?characterEncoding=utf8
+      username: miscread
+      password: Di_da9in@che
+  taxi:
+    master:
+      url: jdbc:mysql://192.168.2.98:4000/didapinche_taxi?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+    slave:
+      url: jdbc:mysql://192.168.2.99:4000/didapinche_taxi?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+  carpool:
+    master:
+      url: jdbc:mysql://192.168.2.98:4001/didapinche_carpool?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+    slave: 
+      url: jdbc:mysql://192.168.2.99:4001/didapinche_carpool?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+  payaccount_his:
+    master:
+      url: jdbc:mysql://192.168.2.98:4002/didapinche_payaccount_his?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+    slave:
+      url: jdbc:mysql://192.168.2.99:4002/didapinche_payaccount_his?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+  coupon:
+    master:
+      url: jdbc:mysql://192.168.2.98:4003/didapinche_coupon?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+    slave:
+      url: jdbc:mysql://192.168.2.99:4003/didapinche_coupon?characterEncoding=utf8
+      username: didachuxingdb
+      password: luqixiuzijiayougan0901
+  jifen:
+    master:
+      url: jdbc:mysql://192.168.2.46:3308/didapinche_jifen?characterEncoding=utf8
+      username: jifeng_read
+      password: Didapinche_Jifen
+    slave:
+      url: jdbc:mysql://192.168.2.165:3308/didapinche_jifen?characterEncoding=utf8
+      username: jifeng_read
+      password: Didapinche_Jifen
+  cms:
+    master:
+      url: jdbc:mysql://192.168.2.90:3500/didapinche_cms?tinyInt1isBit=false&amp;useUnicode=true&amp;characterEncoding=utf-8
+      username: cmsread
+      password: Cms.Read
+    slave:
+      url: jdbc:mysql://192.168.2.242:3500/didapinche_cms?tinyInt1isBit=false&amp;useUnicode=true&amp;characterEncoding=utf-8
+      username: cmsread
+      password: Cms.Read
+  enterprise:
+    master:
+      url: jdbc:mysql://192.168.2.98:4004/didapinche_enterprise?characterEncoding=utf8
+      username: didachuxingdb
+      password: c8bf6f1c456c1f41f396ac1a4c4a3c90
+    slave:
+      url: jdbc:mysql://192.168.2.99:4004/didapinche_enterprise?characterEncoding=utf8
+      username: didachuxingdb
+      password: c8bf6f1c456c1f41f396ac1a4c4a3c90
+  saas:
+    master:
+      url: jdbc:mysql://192.168.2.98:4005/didapinche_saas?characterEncoding=utf8
+      username: online_db
+      password: b2dc0df3910323a
+    slave:
+      url: jdbc:mysql://192.168.2.99:4005/didapinche_saas?characterEncoding=utf8
+      username: online_db
+      password: b2dc0df3910323a
+
+memcached:
+  servers: 192.168.2.133:11211,192.168.2.134:11211,192.168.2.135:11211,192.168.2.136:11211
+  operationTimeout: 2000
+  shutdownTimeout: 100
+  keyprefix: didapinche
+  expiredTime: 8000
+  opTimeout: 3
+  compress: false
+  asyncGet: false
+  maxSize: 150
+
+redis:
+  pool:
+    maxTotal: 100
+    maxIdle: 20
+    maxWaitMillis: 5000
+    testOnBorrow: true
+
+  servers:
+    r1:
+      master: 192.168.2.145
+      slave: 192.168.2.146
+      password: diDa.redis
+      port: 7000
+    r2:
+      master: 192.168.2.150
+      slave: 192.168.2.151
+      password: diDa.redis
+      port: 7000
+    r3:
+      master: 192.168.2.162
+      slave: 192.168.2.242
+      password: diDa.redis
+      port: 7000
+    r4:
+      host: ["192.168.2.160","192.168.2.161","192.168.2.166","192.168.2.167"]
+      port: 7000
+      password: diDa.redis
+    r5:
+      master: 192.168.2.169
+      slave: 192.168.2.168
+      password: diDa.redis
+      port: 7000
+    r6:
+      master: 192.168.2.169
+      slave: 192.168.2.168
+      password: dida_map@redis9
+      port: 7100
+    r7:
+      master: 192.168.2.142  #slave 192.168.2.140:6379
+      slave: 192.168.2.142
+      #password: nopassword
+      port: 6380
+
+rocketmq:
+  producer:
+    default_rocketMQNamesrvAddr: 192.168.2.182:9876;192.168.2.183:9876;192.168.2.184:9876;
+    online_rocketMQNamesrvAddr: 192.168.2.182:9876;192.168.2.183:9876;192.168.2.184:9876;
+
+  consumer:
+    _nameSrvAddr: 192.168.2.182:9876;192.168.2.183:9876;192.168.2.184:9876;
+    _maxOffsetThreshold: 25000
+    #_txBeanName: transactionManager_didapinche
+
+sms:
+  smsSwitch: true
+  wsdlAddr: http://192.168.2.246:8280/dida-sms/smsService?wsdl
+
+thrift:
+  zk_connection: 192.168.2.48:2282,192.168.2.49:2282,192.168.2.143:2282
+  defaultTimeout: 200
+
+hbase:
+  thrift:
+    host: 192.168.2.185
+    port: 9090
+    maxActive: 100
+    maxIdle: 10
+    testOnBorrow: true
+    testOnReturn: false
+    testWhileIdle: true
+    conTimeout: 2000
+
+base_message:
+  source_cid: dida-common
+
+activemq:
+  brokerURL:
+    point: tcp://192.168.2.126:61616
+    transfer: tcp://192.168.2.126:61616
+
+redis-cluster:
+  pool:
+    minIdle: 4
+    maxIdle: 10
+    maxTotal: 100
+    maxWaitMillis: 3000
+    testOnBorrow: true
+  servers:
+    rc1: #carpool
+      nodes: 192.168.2.140:6387,192.168.2.142:6388
+    rc2: #taxi
+      nodes: 192.168.2.140:6389,192.168.2.142:6390
+    rc3: #task
+      nodes: 172.16.16.32:6383,172.16.16.33:6384,172.16.16.35:6379,172.16.16.35:6380
+    rc4: #lock
+      nodes: 192.168.2.140:6389,192.168.2.142:6390
+    rc5: #userstat
+      nodes: 172.16.16.33:6408,172.16.16.34:6406,172.16.16.35:6408
+    rc6: #active
+      nodes: 192.168.2.198:6381,192.168.2.199:6380
+    rc7: #taxi_mix1
+      nodes: 192.168.2.198:6383,192.168.2.198:6384,192.168.2.199:6382
+    rc8: #company use taxi
+      nodes: 172.16.16.32:6379,172.16.16.33:6380
+    rc9: #server_finance
+      nodes: 172.16.16.32:6387,172.16.16.33:6391,172.16.16.34:6388,172.16.16.35:6389,172.16.16.36:6387,172.16.16.37:6384
+    rc10: #server_coupon
+      nodes: 172.16.16.32:6389,172.16.16.33:6393,172.16.16.34:6390,172.16.16.35:6391,172.16.16.36:6389
+    rc11: #server_todo_all_ride
+      nodes: 172.16.16.32:6390,172.16.16.33:6395,172.16.16.34:6392,172.16.16.35:6393,172.16.16.36:6391,172.16.16.37:6387
+    rc12: #server_cid2id
+      nodes: 172.16.16.32:6396,172.16.16.33:6399,172.16.16.34:6396,172.16.16.35:6397,172.16.16.36:6396,172.16.16.37:6392
+    rc13: #server_deviceinfo_rc13
+      nodes: 172.16.16.32:6398,172.16.16.33:6401,172.16.16.34:6398,172.16.16.35:6399,172.16.16.36:6398,172.16.16.37:6394
+    rc14: #server_cms_mix_rc14
+      nodes: 172.16.16.32:6400,172.16.16.33:6403,172.16.16.34:6400,172.16.16.35:6401,172.16.16.36:6400,172.16.16.37:6396
+    rc15: #server_user_mix_rc15
+      nodes: 172.16.16.32:6402,172.16.16.33:6405,172.16.16.34:6402,172.16.16.35:6404,172.16.16.36:6402,172.16.16.37:6398
+    rc16: #server_routing_rc16
+      nodes: 172.16.16.35:6409,172.16.16.36:6406,172.16.16.37:6402
+    rc17: #server_cupid_rc17
+      nodes: 172.16.16.32:6406,172.16.16.33:6411,172.16.16.34:6408,172.16.16.35:6412,172.16.16.36:6408,172.16.16.37:6404
+    rc18: #server_relation_rc18
+      nodes: 172.16.16.32:6410,172.16.16.36:6412,172.16.16.37:6408
+      
+async:
+  threadpool:
+    default:
+      corePoolSize: 5
+      maximumPoolSize: 80
+      queueCapacity: 10
+      asyncTimeout: 3  # unit: s
+      
+      
+promeconsul:
+    appName: ${spring.application.name}
+    
+endpoints:
+  prometheus:
+    path: /metrics
+  metrics:
+    enabled: false              
+      
+com:
+  didapinche:
+    coupon:
+      thrift:
+        CouponService:
+          group: group1
+          failOver: 0
+          timeout: 800
+    thrift:
+      taxiwrite:
+        TaxiwriteThriftService:
+          group: group1
+          failOver: 0
+          timeout: 800
+      carpoolwrite:
+        CarpoolwriteThriftService:
+          group: group1
+          failOver: 0
+          timeout: 800
+      didapinchewrite:
+        DidapinchewriteThriftService:
+          group: group1
+          failOver: 0
+          timeout: 800
+      taxipaywrite:
+        TaxiPayWriteThriftService:
+          group: group1
+          failOver: 0
+          timeout: 800
+
+image:
+  upload: http://192.168.2.100:8080/bfs/
+  download:
+    old: http://img.didapinche.com/imgs/
+    bfs:
+      outer: http://img.didapinche.com/pics/
+      inner: http://192.168.2.100:8080/bfs/
+      
+opentracing:
+  spring:
+    cloud:
+      jdbc:
+        enabled: false         

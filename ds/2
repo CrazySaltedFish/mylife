@@ -1,0 +1,734 @@
+2.1
+一、
+1、C
+2、B
+3、A
+2.2
+一、
+1、D -> A
+2、B -> A
+3、B
+4、B -> D
+5、A
+6、C
+7、C
+8、C
+9、C
+10、B
+二、
+1、
+bool delMix(SqList &L,ElemType &e){
+if(L.length==D)
+	return false;
+int i;
+int mix = D;	
+for(i=1;i<L.length;i++){
+	if(L.data[i]<L.data[min]){
+		min=i;	
+	}
+}
+e=L.data[min];
+L.data=L.data[L.length-1];
+L.length--;
+return true;
+}
+2、
+void reverse(SqList &L){
+	ElemType e;
+	for(int i=0;i<L.length/2;i++){
+		e=L.data[i];
+		L.data[i]=L.data[L.length-i-1];
+		L.data[l.length-i-1]=e;
+	}
+}
+3、
+void delValue(SqList &L,ElemType e){
+	int k=0;
+	for(int i=0;i<L.length;i++){
+		if(L.data[i]!=e){
+			L.data[k]=L.data[i];
+			k++;
+		}
+	}
+	L.length=k;
+}
+void delValue(SqList &L,ElemType e){
+	int count=0;
+	for(int i=0;i<L.length;i++){
+		if(L.data[i]==e){
+			count++;
+			continue;
+		}
+		L.data[i-count]=L.data[i];
+	}
+	L.length -= count;
+}
+4、
+bool delRange(SqList &L,ElemType s,ElemType t){
+	if(s>t){
+		reture false;
+	}
+	int i,j;
+	for(i=0;i<L.length&&L.data[i]<s;i++);
+	if(i>=L.length)
+		return false;
+	for(j=i;j<L.length&&L.data[j]>t;j++);
+	for(;j<L.length;i++,j++){
+		L.data[i]=L.data[j];
+	}
+	L.length=i+1;
+	return true;
+}
+5、
+bool delRange(SqList &L,ElemType s,ElemType t){
+	if(s>t){
+		return false;
+	}
+	int i=0;
+	int count=0;
+	while(i<L.length){
+		if(L.data[i]>s && L.data[i]<t){
+			count++;
+		}else if(L.data[i]>t){
+			L.data[i-count]=L.data[i];
+		}
+		i++;
+	}
+	L.length-=count;
+	return true;
+}
+6、
+void delSame(SqList &L){
+	int count=0;
+	for(int i=1;i<L.length;i++){
+		if(L.data[i]==L.data[i-1]){
+			count++;
+		}else{
+			L.data[i-count]=L.data[i-count];
+		}
+	}
+	L.length-=count;
+}
+bool delSame(SqList &L){
+	if(L.length==0)
+		return false;
+	int i,j;
+	for(i=0,j=1;j<L.length;j++){
+		if(L.data[j]!=L.data[j-1]){
+			L.data[++i]=L.data[j];
+		}
+	}
+	L.length=i+1;
+	return true;
+}
+7、
+bool merge(SqList L1,SqList L2,SqList &L){
+	int i=0,j=0,k=0;
+	while(i<L1.length && j<L2.length){
+		if(L1.data[i]<=L.data[j]){
+			L.data[k++]=L1.data[i++];
+		}else{
+			L.data[k++]=L2.data[j++];
+		}
+	}
+	while(i<L1.length){
+		L.data[k++]=L.data[i++];
+	}
+	whilr(j<L2.length){
+		L.data[k++]=L.data[j++];
+	}
+	L.length=k;
+	return true;
+}
+8、
+
+2.3
+一、
+1、B
+2、B
+3、C
+4、D
+5、B -> A
+6、C
+7、C -> D 先排序再插入 n+nlog2(n)
+8、A -> C 先要找到尾结点
+9、C
+10、B
+11、B、A
+12、D -> C 不同的存储方式有不同的情况
+13、D
+14、D
+15、A
+16、D
+17、B
+18、D
+19、D
+20、A
+21、C
+22、C
+23、C
+24、C -> D 读题马虎
+25、B
+二、
+1、
+bool del_x_node(LinkList &L,ElemType x){
+	if(L==NULL)
+		return true;
+	LNode *q;
+	if(L->data==x){
+		q=L->next;
+		L->next=q->next;
+		L->data=q->data;
+		free(q);
+		del_x_node(L,x);
+	}else{
+		del_x_node(L->next,x);
+	}
+}
+bool del_x_node(LinkList &L,ElemType x){
+	if(L==NULL)
+		return true;
+	LNode *q;
+	if(L->data==x){
+		q=L;
+		L=L->next;
+		free(q);
+		del_x_node(L,x);
+	}else{
+		del_x_node(L->next,x);
+	}
+}
+t=O(n)
+2、
+void del_x_node(LinkList &L,ElemType x){
+	if(L->next==NULL)
+		return;
+	LNode *q;
+	if(L->next->data==x){
+		q=L->next;
+		L->next=L->next->next;
+		free(q);
+		del_x_node(L,x);
+	}else{
+		del_x_node(L->next,x);
+	}
+}
+
+void del_x_node(LinkList &L,ElemType x){
+	if(L->next==NULL)
+		return;
+	LNode *p=L->next,*pre=L,*q;
+	while(p!=NULL){
+		if(p->data==x){
+			q=p;
+			p=p->next;
+			pre->next=p;
+			free(q);
+		}else{
+			pre=p;
+			p=p->next;
+		}
+	}
+}
+void del_x_2(LinkList &L,ElemType x){
+	LNode *p=L->next,*r=L,*q;
+	while(p!=NULL){
+		if(p->data!=x){
+			r->next=p;
+			r=p;
+			p=p->next;
+		}else{
+			q=p;
+			p=p->next;
+			free(q);
+		}
+	}
+	r->next=NULL;
+}
+t=O(n) k=O(1)
+3、
+void revert_print(LinkList &L){
+	if(L->next==NULL)
+		return;
+	revert_print(L->next);
+	print(L->data);
+}
+4、
+void del_min(LinkList &L){
+	LNode *p=L->next,*pre=L;
+	LNode *minPre=L,*min=minPre->next;
+	while(p!=NULL){
+		if(p->data<min->data){
+			min=p
+			minPre=pre;
+		}
+		pre=p;
+		p=p->next;
+	}
+	minpre->next=min->next;
+	free(min);
+}
+t=O(n) k=O(1)
+5、
+LinkList reverse(LinkList L){
+	LNode *p=L->next,*temp;
+	L->next=NULL;
+	while(p!=NULL){
+		temp=p->next
+		p->next=L->next;
+		L->next=p;		
+		p=temp;
+	}
+	return L;
+}
+LinkList reverse(LinkList L){
+	LNode *p=L->next,*pre,*r=p->next;
+	if(p==NULL){
+		return L;
+	}
+	p->next=NULL;
+	while(r!=NULL){
+		pre=p;
+		p=r;
+		r=r->next;
+		p->next=pre;
+	}
+	L->next=p;
+	return L;
+}
+6、???
+void sort(LinkList &L){
+	LNode *p=L->next,*pre,*r=p->next;
+	p->next=NULL;
+	while(r!=NULL){
+		pre=L;
+		while(r->data<p->data || p==NULL){
+			pre=p;
+			p=p->next;
+		}
+		pre->next=r;
+		r=r->next;
+		p=L->next;
+	}
+}
+7、
+void del_x_to_y(LinkList &L,ElemType x,ElemType y){
+	LNode *p=L->next;
+	while(p!=NULL){
+		if(p->data>x&&p->data<y){
+			q=p->next;
+			p->next=q->next;
+			p->data=q->data;
+			free(q)
+		}else{
+			p=p->next;
+		}
+	}
+}
+8、
+LinkList searCh_list_common(LinkList L1,LinkList L2){
+	int len1=length(L1);
+	int len2=length(L2);
+	int dist;
+	linkList longList,shortList;
+	if(len1>len2){
+		dist=len1-len2;
+		longList=L1;
+		shortList=L2;
+	}else{
+		dist=len2-len1;
+		longList=L2;
+		shortList=L1;
+	}
+	while(dist--){
+		longList=longList->next;
+	}
+	while(longList!=NULL){
+		if(longList==shortList)
+			return longList;
+		longList=longList->next;
+		shortList=shortList->next;
+	}
+	return NULL;
+}
+9、
+void del_min(LinkList &head){
+	LNode *pre,*p,*min; 
+	while(head->next!=NULL){
+		pre=head;
+		p=pre->next;
+		while(p->next=NULL){
+			if(p->next->data<pre->next->data){
+				pre=p;
+			}
+			p=p->next;
+		}
+		min=pre->next;
+		print(min->data);
+		pre->next=min->next;
+		free(min);
+	}	
+}
+10、
+void devide(LinkList L,LinkList &A,LinkList &B){
+	int index=0;
+	A=(LinkList)malloc((sizeof(LNode)));	
+	B=(LinkList)malloc((sizeof(LNode)));
+	A->next=NULL;
+	B->next=NULL;
+	LNode *a=A,*b=B,*p=L->next;
+
+	while(p!=NULL){
+		if(index/2==0){
+			a->next=p;
+			a=a->next;
+		}else{
+			b->next=p;
+			b=b->next;
+		}
+		p=p->next;
+		index++;
+	}
+	a->next=NULL;
+	b->next=NULL;
+}
+11、
+void devide_2(LinkList L,LinkList &A,LinkList &B){
+	int index=0;
+	A=(LinkList)malloc((sizeof(LNode)));	
+	B=(LinkList)malloc((sizeof(LNode)));
+	A->next=NULL;
+	B->next=NULL;
+	LNode *a=A,*b=B,*p=L->next,*temp;
+	while(p!=NULL){
+		if(index/2==0){
+			temp=p->next;
+			p->next=A->next;
+			A->next=p;
+			p=temp;
+		}else{
+			temp=p->next;
+			p->next=B->next;
+			B->next=p;
+			p=temp;
+		}
+		index++;
+	}
+}
+
+LinkList devide_2(LinkList &A){
+	LinkList B = (LinkList)malloc(sizeof(LNode));
+	B->next=NULL;
+	LNode *p=A->next;
+	A->next=NULL;
+	LNode *ra=A,*rb=B;
+	while(p!=NULL){
+		ra->next=p;
+		ra=p;
+		p=p->next;
+		q=p->next;
+		temp=rb->next;
+		rb->next=p
+		p->next=temp;
+		p=q;
+	}
+	return B;
+}
+12、
+void del_same(LinkList &L){
+	LNode *pre=L,*p=L->next;
+	while(p!=NULL){
+		if(p->data>pre->data){
+			p=p->next;
+		}else{
+			q=p->next;
+			pre->next=p->next;
+			free(p);
+			p=pre->next;
+		}
+	}
+}
+13、
+void merge(LinkList &A,LinkList &B){
+	LNode *a=A->next,*b=B->next,*temp;
+	A->next=NULL;
+	while(a!=NULL && b!=NULL){
+		if(a->data>b->data){
+			temp=a->next;
+			a->next=A->next;
+			A->next=a;
+			a=temp;
+		}else{
+			temp=b->data;
+			b->next=A->next;
+			A->next=b;
+			b=temp;
+		}
+	}
+	while(a!=NULL){
+		temp=a->next;
+		a->next=A->next;
+		A->next=a;
+		a=temp
+	}
+	while(b!=NULL){
+		temp=b->data;
+		b->next=A->next;
+		A->next=b;
+		b=temp;
+	}
+	free(B);
+}
+14、
+LinkList get_common(LinkList A,LinkList B){
+	LinkList C=(LinkList)malloc(sizeof(LNode));
+	LNode *a=A->next,*b=B->next,*c=C,*r;
+	while(a!=NULL&&b!=NULL){
+		if(a->data>b->data){
+			b=b->next;
+		}else if(a->data<b->data){
+			a=a->next
+		}else{
+			r=(LNode)malloc(sizeof(LNode));
+			r->data=a->data;
+			c->next=r;
+			c=r;
+			a=a->next;
+			b=b->next;
+		}
+	}
+	r->next=NULL;
+	return C;
+}
+15、
+LinkList get_common(LinkList &A,LinkList &B){
+	LNode *a=A->next,*b=B->next,*c=A,*u;
+	A->next=NULL;
+	while(a!=NULL&&b!=NULL){
+		if(a->data>b->data){
+			u=b;
+			b=b->next;
+			free(u);
+		}else if(a->data<b->data){
+			u=a;
+			a=a->next;
+			free(u);
+		}else{
+			c->next=a;
+			c=a;
+			a=a->next;
+			u=b;
+			b=b->next;
+			free(u);
+		}
+	}
+	while(a!=NULL){
+		u=a;
+		a=a->next;
+		free(u);		
+	}
+	while(b!=NULL){
+		u=b;
+		b=b->next;
+		free(u);		
+	}
+	c->next=NULL;
+	free(B);
+	return A;
+}
+16、
+bool is_sub_sequence(LinkList &A,LinkList &B){
+	LNode *a=A->next,*b=B->next,*temp
+	while(a!=NULL){
+		if(a->data==b->data){
+			ta=a;
+			while(a!=NULL){
+				a=a->next,b=b->next;
+				if(b==NULL){
+					return true;
+				}
+				if(a->data!=b->data){
+					break;
+				}
+			}
+			a=ta;
+		}
+		a=a->next;
+		b=B->next;
+	}
+	return false;
+}
+
+bool is_sub_sequence(LinkList &A,LinkList &B){
+	LNode *a=A->next,*b=B->next,*pre
+	while(a!=NULL&&b!=NULL){
+		if(a->data==b->data){
+			a=a->next;
+			b=b->next;
+		}else{
+			pre=pre->next;
+			a=pre;
+			a=B->next
+		}
+	}
+	if(q==NULL){
+		return true;
+	}
+	return false;
+}
+17、
+18、
+void link(LinkList &h1,LLinnkList &h2）{
+	LNode *p=h1->next;
+	h1->next=h2;
+	while(h2->next!=NULL){
+		h2=h2->next;
+	}
+	h2->next=p;
+}
+19、
+void del_cir(LinkList &L){
+	LNode *p=L->next,*pre=L,*min;
+	while(p->next!=p){
+		if(p->next==L){
+			min=pre->next;
+			pre->next=min->next;
+			print(min->data);
+			free(min);
+		}else if(p->next->data<pre->next->data){
+			pre=p;
+		}
+		p=p->next;
+	}
+	free(L);
+}
+20、
+DNode* Locate(DLinkList &L,ElemType x){
+	DNode *to=L->next,*p=L->next;
+	int freq=to->freq;
+	while(p!=NULL){
+		if(p->data==x){
+			p->freq=p->freq+1;
+			p->pred->next=p->next;
+			p->next->pred=p->pred;
+			to->pred->next=p;
+			p->pred=to->pred;
+			p->next=to;
+			to->pred=p;
+			return p;
+		}else{
+			if(p->freq<freq){
+				to=p;
+				freq=to->freq;
+			}
+			p=p->next;
+		}
+	}
+	return NULL;
+}
+21、
+（1）、
+首先链表的的长度要大于k，然后记录一个指针指向当前遍历指针的前6个结点，然后同时向后遍历，当当前指针遍历到链表末尾的时候，此时记录的指针即指向倒数第六个元素的位置。
+
+问题的关键是设计一个尽可能高效的算法，通过遍历一趟，找到倒数第k个结点的位置。算法的基本设计思想是：定义两个指针变量p和q，初始时均指向头结点的下一个指针（链表的第一个结点），p指针沿着链表移动；当p指针移动到第k个结点时，q指针开始与p指针同步移动；当p指针移动到最后一个结点时，q指针所指示的结点为倒数第k个结点。以上过程仅进行一遍扫描。
+（2）、
+1、count
+（3）、
+typedef int ElemType;	//链表数据类型的定义
+typedef struct LNode{	//链表结点的结构定义
+	ElemType data;		//结点数据
+	struct LNode *next;	//结点链接指针
+}LNode,*LinkList;
+
+int revert_k(LinkList &list,int k){
+	LNode *preK=list->next,*p=list->next;
+	while(p!=NULL&&k>0){
+		p=p->next;
+		k--;
+	}
+	if(p==NULL){
+		return 0;
+	}
+	while(p!=NULL){
+		p=p->next;
+		preK=preK->next;
+	}
+	print(preK->data);
+	return 1;
+}
+
+22、
+（1）、
+1、分别求出str1和str2的长度
+（2）、
+typedef char ElemType;
+typedef struct LNode{
+	ElemType data;
+	LNode *next;
+}LNode,*LinkList;
+int length(LinkList &L){
+	LNode *p=L->next;
+	int count=0;
+	while(p!=NULL){
+		count++;
+		p=p->next;
+	}
+	return count;
+}
+LNode* get_common(LinkList &str1,LinkList &str2){
+	int len1=length(str1);
+	int len2=lenght(str2);
+	LNode *longL,*shortL;
+	int dist=0;
+	if(len1>len2){
+		longL=str1->next;
+		short=str2->next;
+		dist=len1-len2;
+	}else{
+		longL=str2->next;
+		shortL=str1->next;
+		dist=len2-len1;
+	}
+	while(dist>0){
+		longL=longL->next;
+		dist--;
+	}
+	while(longL!=NULL){
+		if(longL==shortL)
+			return longL;
+		else{
+			longL=longL->next;
+			shortL=shortL->next;
+		}
+	}
+	return NULL;
+}
+（3）、
+时间复杂度为O(n);
+23、
+typedef struct LNode{
+	int data;
+	LNode *link;
+}LNode,*LinkList;
+
+void del_same(LinkList &head,int n){
+	LNode p=head,r;
+	int *q,m;
+	q=(int *)malloc(sizeof(int)*(n+1));
+	for(int i=0;i<n+1;i++){
+		*(q+i)=0;
+	}
+	while(p->Link!=NULL){
+		m=p->link->data>0?p->link->data:-p->link->data;
+		if(*(q+m)==0){
+			*(q+m)=1;
+			p=p->link;
+		}else{
+			r=p->link;
+			p->link=r->link;
+			free(r);
+		}
+	}
+	free(q);
+}
+空间复杂度O(m),时间复杂度O(n)
